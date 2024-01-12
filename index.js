@@ -2,6 +2,12 @@
 require('dotenv').config();
 const  express=require("express");
 const mongoose=require("mongoose");
+const cors=require("cors");
+const app=express();
+app.use(cors());
+app.use(cors({
+    origin:['htpps://localhost:3000','htpp://localhost:3000']
+}));
 const mongoString=process.env.DATABASE_URL
 
 const routes=require("./routes/routes");
@@ -16,15 +22,12 @@ dataBase.on("connected",()=>{
     console.log("DataBase connected");
 })
 
-const app=express();
+
 const port=3004;
 app.use(express.json())
 
-app.get("/info",(req,res)=>{
-    res.status(200).send({autor:"Juan Renoj", message:"Wellcom to api rest, using momgodb"})
-})
 
-app.use("/api",routes);
+app.use("/",cors(),routes);
 
 app.listen(port,()=>{
     console.log("server executed on port "+port)

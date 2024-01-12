@@ -9,6 +9,7 @@ const ModelUser=require("../model/ModelUser");
         const saveData= await data.save();
         res.status(200).json(saveData)
     }catch(error){
+        console.log(error)
         res.status(500).send({message:error.message})
     }
 
@@ -52,8 +53,9 @@ const ModelUser=require("../model/ModelUser");
     try {
         const id=req.params.id;
         const data=await ModelUser.findByIdAndDelete(id);
-        res.status(200).send(`Document with ${data.name} has been deleted...`);
+        res.status(200).send({message:`Document with ${data.name} has been deleted...`});
     } catch (error) {
+        console.log(error)
         res.status(500).send(`Internal server error ${error.message}`)
     }
  }
